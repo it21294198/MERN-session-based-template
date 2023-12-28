@@ -26,31 +26,49 @@ npm start
 
 [Setup react router dom](https://reactrouter.com/en/main)
 
-1. Edit `index.js` file
+1. Edit `index.js` file for `Routing`
 ```js
-const root = ReactDOM.createRoot(document.getElementById('root'));
-root.render(
-  <React.StrictMode>
-    <RouterProvider router={router} />
-  </React.StrictMode>
-);
-```
+import { BrowserRouter,Routes,Route,Link,Outlet } from "react-router-dom";
 
-2. Add routeing config to `index.js` file
+function Routing() {
+  return ( 
+    <BrowserRouter>
+
+    <div className="position-relative">
+      <div className="position-absolute top-0 start-50 translate-middle-x">
+        <Link to="/"><button>Login Test</button></Link>
+        <Link to="/home"><button>Home Test</button></Link>
+      </div>
+    </div>
+
+      <Routes>
+        <Route path="/" element={<App/>}/>
+        <Route path="/home" element={<Home/>}/>
+        <Route path="*" element={<Error/>}/> {/* Gives for any path not in Routes */}
+      </Routes>
+
+      <Outlet/> {/* Render the router outputs */}
+
+  </BrowserRouter>
+   );
+}
+```
+[See More Details about BrowserRouter](https://reactrouter.com/en/main/router-components/browser-router)
+
+[See More Details about Navigation in Routes](https://reactrouter.com/en/main/hooks/use-navigate)
+
+2. Edit `index.js` file for `Context` and Create Context folder to implement `UserProvider`
 ```js
-import {
-  createBrowserRouter,
-  RouterProvider,
-} from "react-router-dom";
-import Error from '../src/routes/Error'
+import { UserProvider } from './context/UserContext';
 
-const router = createBrowserRouter([
-  {
-    path: "/",
-    element: <App/>,
-    errorElement: <Error/>
-  },
-]);
+function Context() {
+    return ( 
+      <UserProvider>
+        <Routing/>
+      </UserProvider>
+   );
+}
 ```
+[See More Details](https://www.freecodecamp.org/news/context-api-in-react/)
 
 3. Moved `App.js` to `routes` folder and renamed it as `App.jsx`
