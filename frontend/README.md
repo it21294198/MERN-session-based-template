@@ -98,3 +98,5 @@ const Protected = ({ isLoggedIn, children }) => {
 };
 export default Protected;
 ```
+
+5. Active router was added in components folder which will show the active router currenly on
