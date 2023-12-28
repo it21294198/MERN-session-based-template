@@ -7,6 +7,7 @@ import App from './routes/App';
 import Home from './routes/Home';
 import Error from './routes/Error';
 import Protected from './routes/Protected';
+import ActiveRoute from '../src/components/ActiveRoute'
 import { useUser } from './context/UserContext';
 import { UserProvider } from './context/UserContext';
 import { BrowserRouter,Routes,Route,Link,Outlet } from "react-router-dom";
@@ -36,6 +37,7 @@ function Routing() {
         <Link to="/"><button>Login Test</button></Link>
         <Link to="/home"><button>Home Test</button></Link>
       </div>
+      <ActiveRoute/>
     </div>
 
       <Routes>

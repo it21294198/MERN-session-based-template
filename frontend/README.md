@@ -26,6 +26,8 @@ npm start
 
 [Setup react router dom](https://reactrouter.com/en/main)
 
+[More about react router](https://youtu.be/Ul3y1LXxzdU?si=PWZwdaukY2pVBMKK)
+
 1. Edit `index.js` file for `Routing`
 ```js
 import { BrowserRouter,Routes,Route,Link,Outlet } from "react-router-dom";

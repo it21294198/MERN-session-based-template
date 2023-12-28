@@ -23,7 +23,10 @@ dotenv - import environment variables
 bcrypt - password encription
 express-session - sessions for express
 ```
-by `npm i express nodemon mongodb mongoose dotenv bcrypt express-session`
+To install all of above at once
+```bash
+npm i express nodemon mongodb mongoose dotenv bcrypt express-session
+```
 
 ### Add main imports to `server.js` file
 ```js
