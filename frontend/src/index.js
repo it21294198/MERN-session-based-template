@@ -6,6 +6,8 @@ import reportWebVitals from './reportWebVitals';
 import App from './routes/App';
 import Home from './routes/Home';
 import Error from './routes/Error';
+import Protected from './routes/Protected';
+import { useUser } from './context/UserContext';
 import { UserProvider } from './context/UserContext';
 import { BrowserRouter,Routes,Route,Link,Outlet } from "react-router-dom";
 
@@ -23,6 +25,9 @@ function Context() {
 }
 
 function Routing() {
+
+  const { userName } = useUser();
+
   return ( 
     <BrowserRouter>
 
@@ -35,7 +40,13 @@ function Routing() {
 
       <Routes>
         <Route path="/" element={<App/>}/>
-        <Route path="/home" element={<Home/>}/>
+        <Route path="/home" 
+          element={
+            <Protected isLoggedIn={userName}>
+              <Home />
+            </Protected>
+          }/>
+        {/* <Route path="/home" element={<Home/>}/> */}
         <Route path="*" element={<Error/>}/> {/* Gives for any path not in Routes */}
       </Routes>
 

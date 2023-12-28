@@ -1,3 +1,5 @@
+[See More Details](https://itnext.io/mastering-session-authentication-aa29096f6e22)
+
 1. initialze backend folder
 ```bash
 npm init -y
@@ -19,8 +21,9 @@ mongodb - DB
 mongoose - creates a connection between MongoDB and the Node.js
 dotenv - import environment variables
 bcrypt - password encription
+express-session - sessions for express
 ```
-by `npm i express nodemon mongodb mongoose dotenv bcrypt`
+by `npm i express nodemon mongodb mongoose dotenv bcrypt express-session`
 
 ### Add main imports to `server.js` file
 ```js
@@ -68,3 +71,7 @@ mongoose.connect(process.env.MONGO_URI)
 ```bash
 npm run dev
 ```
+
+#### More about security
+
+[x-powered-by](https://stackoverflow.com/questions/5867199/cant-get-rid-of-header-x-powered-byexpress/12484642#12484642)

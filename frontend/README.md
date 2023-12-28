@@ -43,7 +43,7 @@ function Routing() {
 
       <Routes>
         <Route path="/" element={<App/>}/>
-        <Route path="/home" element={<Home/>}/>
+        <Route path="/home" element={<Home/>}/> {/* This will be a protected route */}
         <Route path="*" element={<Error/>}/> {/* Gives for any path not in Routes */}
       </Routes>
 
@@ -72,3 +72,27 @@ function Context() {
 [See More Details](https://www.freecodecamp.org/news/context-api-in-react/)
 
 3. Moved `App.js` to `routes` folder and renamed it as `App.jsx`
+
+4. Protected route is add for `Home` component. In this way if userName is empty, the home route will not be accessable it will be redirect to `Login` component.
+
+```js
+<Route path="/home" 
+  element={
+    <Protected isLoggedIn={userName}>
+      <Home />
+    </Protected>
+}/>
+```
+
+```js
+//Protected.js
+import { Navigate } from "react-router-dom";
+
+const Protected = ({ isLoggedIn, children }) => {
+  if (isLoggedIn === '') {
+    return <Navigate to="/" replace />;
+  }
+  return children;
+};
+export default Protected;
+```
