@@ -5,3 +5,4 @@
 ```bash
 npx create-react-app frontend
 ```
+5. start backend before frontend server
