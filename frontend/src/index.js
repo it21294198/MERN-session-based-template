@@ -3,14 +3,14 @@ import ReactDOM from 'react-dom/client';
 import './index.css';
 import reportWebVitals from './reportWebVitals';
 
-import App from './routes/App';
+import Login from './routes/Login';
 import Home from './routes/Home';
+import About from './routes/About'
 import Error from './routes/Error';
-import Protected from './routes/Protected';
 import ActiveRoute from '../src/components/ActiveRoute'
 import { useUser } from './context/UserContext';
 import { UserProvider } from './context/UserContext';
-import { BrowserRouter,Routes,Route,Link,Outlet } from "react-router-dom";
+import { BrowserRouter,Routes,Route,Outlet,Navigate } from "react-router-dom";
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
@@ -26,37 +26,42 @@ function Context() {
 }
 
 function Routing() {
-
   const { userName } = useUser();
 
-  return ( 
+  return (
     <BrowserRouter>
-
-    <div className="position-relative">
-      <div className="position-absolute top-0 start-50 translate-middle-x">
-        <Link to="/"><button>Login Test</button></Link>
-        <Link to="/home"><button>Home Test</button></Link>
+      <div className="position-relative">
+        <div className="position-absolute top-0 start-50 translate-middle-x">
+          {/* shows the active route and other available routes */}
+          <ActiveRoute/>
+        </div>
       </div>
-      <ActiveRoute/>
-    </div>
 
       <Routes>
-        <Route path="/" element={<App/>}/>
-        <Route path="/home" 
-          element={
-            <Protected isLoggedIn={userName}>
-              <Home />
-            </Protected>
-          }/>
-        {/* <Route path="/home" element={<Home/>}/> */}
-        <Route path="*" element={<Error/>}/> {/* Gives for any path not in Routes */}
+        <Route path="/" element={<RouteRegistration element={Login} auth={userName} />} />
+        <Route path="/home" element={<RouteProtected element={Home} auth={userName} />} />
+        {/* <Route path="/about" element={<RouteProtected element={About} auth={userName} />} /> */}
+        <Route path="/about" element={<About />} />
+        <Route path="*" element={<Error />} />
       </Routes>
 
-      <Outlet/> {/* Render the router outputs */}
-
-  </BrowserRouter>
-   );
+      <Outlet />
+    </BrowserRouter>
+  );
 }
+
+const RouteRegistration = ({ auth, element: Component, ...rest }) => {
+  return (
+    auth ? <Navigate to="/home" replace /> : <Component {...rest} />
+  );
+};
+
+const RouteProtected = ({ auth, element: Component, ...rest }) => {
+  return (
+    auth ? <Component {...rest} /> : <Navigate to="/" replace />
+  );
+};
+
 
 // If you want to start measuring performance in your app, pass a function
 // to log results (for example: reportWebVitals(console.log))

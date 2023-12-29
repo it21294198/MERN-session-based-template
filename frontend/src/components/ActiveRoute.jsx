@@ -16,6 +16,11 @@ const ActiveRoute = () => {
           </NavLink>
         </li>
         <li style={{ marginRight: '20px' }}>
+          <NavLink to="/about" activeClassName="active">
+            About
+          </NavLink>
+        </li>
+        <li style={{ marginRight: '20px' }}>
           <NavLink to="*" activeClassName="active">
             Error page
           </NavLink>

@@ -4,7 +4,7 @@ import { useState } from 'react';
 import { useUser } from '../context/UserContext';
 import { useNavigate } from 'react-router-dom';
 
-function App() {
+function Login() {
 
   const { loginUser } = useUser();
 
@@ -49,4 +49,4 @@ function App() {
   );
 }
 
-export default App;
+export default Login;
