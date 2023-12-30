@@ -3,26 +3,18 @@ const bcrypt = require('bcrypt');
 
 const UserSchema = new mongoose.Schema({
   username: {
-    type: String,
-    validate: {
-      validator: username => User.doesNotExist({ username }),
-      message: "Username already exists"
-    }
+    type: String
   },
   email: {
-    type: String,
-    validate: {
-      validator: email => User.doesNotExist({ email }),
-      message: "Email already exists"
-    }
+    type: String
   },
   password: {
-    type: String,
-    required: true
+    type: String
   }
 }, { timestamps: true });
 
-UserSchema.pre('save', async function () {
+UserSchema.pre('save', async function (next) {
+  const user = this
   if (this.isModified('password')) {
     try {
       const hashedPassword = await bcrypt.hash(this.password, 10);
@@ -31,23 +23,9 @@ UserSchema.pre('save', async function () {
       throw error;
     }
   }
+  next();
 });
 
-UserSchema.statics.doesNotExist = async function (field) {
-  try {
-    return await this.where(field).countDocuments() === 0;
-  } catch (error) {
-    throw error;
-  }
-};
+const User = mongoose.model('users', UserSchema);
 
-UserSchema.methods.comparePasswords = async function (password) {
-  try {
-    return await bcrypt.compare(password, this.password);
-  } catch (error) {
-    throw error;
-  }
-};
-
-const User = mongoose.model('User', UserSchema);
-export default User;
+module.exports = User;

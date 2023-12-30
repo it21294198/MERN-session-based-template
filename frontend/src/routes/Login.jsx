@@ -3,6 +3,7 @@ import '../App.css';
 import { useState } from 'react';
 import { useUser } from '../context/UserContext';
 import { useNavigate } from 'react-router-dom';
+import { signin } from '../api/UserAuth';
 
 function Login() {
 
@@ -17,8 +18,14 @@ function Login() {
 
   const handleSubmit = async (event) =>{
     event.preventDefault();
-    loginUser(user.email)
-    navigate('/home');
+    const userAuth = await signin({
+      email:user.email,
+      password:user.password
+    })
+    if(userAuth.data.auth){
+      loginUser(user.email)
+      navigate('/home');
+    }
   }
 
   return (
