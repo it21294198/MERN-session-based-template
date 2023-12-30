@@ -1,5 +1,5 @@
-import mongoose from 'mongoose';
-import { compareSync, hashSync } from 'bcryptjs';
+const mongoose = require('mongoose');
+const bcrypt = require('bcrypt');
 
 const UserSchema = new mongoose.Schema({
   username: {
@@ -22,16 +22,32 @@ const UserSchema = new mongoose.Schema({
   }
 }, { timestamps: true });
 
-UserSchema.pre('save', function () {
-    if (this.isModified('password')) {
-      this.password = hashSync(this.password, 10);
+UserSchema.pre('save', async function () {
+  if (this.isModified('password')) {
+    try {
+      const hashedPassword = await bcrypt.hash(this.password, 10);
+      this.password = hashedPassword;
+    } catch (error) {
+      throw error;
     }
-  });
-  UserSchema.statics.doesNotExist = async function (field) {
+  }
+});
+
+UserSchema.statics.doesNotExist = async function (field) {
+  try {
     return await this.where(field).countDocuments() === 0;
-  };
-  UserSchema.methods.comparePasswords = function (password) {
-    return compareSync(password, this.password);
-  };
-  const User = mongoose.model('User', UserSchema);
-  export default User;
+  } catch (error) {
+    throw error;
+  }
+};
+
+UserSchema.methods.comparePasswords = async function (password) {
+  try {
+    return await bcrypt.compare(password, this.password);
+  } catch (error) {
+    throw error;
+  }
+};
+
+const User = mongoose.model('User', UserSchema);
+export default User;
