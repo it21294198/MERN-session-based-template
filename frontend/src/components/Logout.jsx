@@ -1,6 +1,7 @@
 import React from 'react'
 // import { useNavigate } from "react-router-dom";
 import { useUser } from '../context/UserContext';
+import { signout } from '../api/UserAuth';
 
 export default function Logout() {
 
@@ -9,7 +10,13 @@ export default function Logout() {
   // const navigate = useNavigate();
 
   const logout = () =>{
-    logoutUser()
+    signout().then(userAuth => {
+      if (!userAuth.data.auth) {
+        logoutUser();
+      }
+    }).catch(error => {
+      console.error("Error during logout:", error);
+    });
     // navigate('/')
   }
   return (

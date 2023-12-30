@@ -14,12 +14,12 @@ app.use(session({
   secret: 'keyboard cat',
   resave: false,
   saveUninitialized: true,
-  cookie: { secure: false }
-  // cookie: {
-  //   maxAge: 60 * 60 * 1000, // Session timeout in milliseconds (1 hour)
-  //   secure: false, // Change to true if using HTTPS
-  //   httpOnly: true,
-  // },
+  // cookie: { secure: false }
+  cookie: {
+    maxAge: 60 * 60 * 1000, // Session timeout in milliseconds (1 hour)
+    secure: false, // Change to true if using HTTPS
+    httpOnly: true,
+  },
 }))
 
 // path and method test middleware

@@ -16,7 +16,7 @@ router.post('/signin', async (req, res) => {
     });
   } else {
     res.json({
-      message: 'unable to create account',
+      message: 'unable to access the account',
       auth: false,
     });
   }
@@ -58,7 +58,8 @@ router.get('/hasauth',(req,res)=>{
   if(req.session.user){
     return res.json({
       message:'Your are signin',
-      auth:true
+      auth:true,
+      user:req.session.user
     })
   }
   return res.json({

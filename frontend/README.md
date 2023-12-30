@@ -130,3 +130,8 @@ export default Protected;
 ```
 
 5. Active router was added in components folder which will show the active router currenly on
+
+6. Add proxy to `package.json` of the backend server
+```json
+"proxy":"http://localhost:3001"
+```

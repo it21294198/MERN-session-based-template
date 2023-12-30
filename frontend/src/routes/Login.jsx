@@ -7,30 +7,45 @@ import { signin } from '../api/UserAuth';
 
 function Login() {
 
-  const { loginUser } = useUser();
+  const { loginUser,loadingStatus } = useUser();
 
   const navigate = useNavigate();
 
+  const [error, setError] = useState('');
   const [user, serUserDetails] = useState({
     email:'',
     password:''
   });
 
   const handleSubmit = async (event) =>{
+    // loadingStatus(true)
     event.preventDefault();
     const userAuth = await signin({
       email:user.email,
       password:user.password
     })
+
     if(userAuth.data.auth){
-      loginUser(user.email)
-      navigate('/home');
+      setError(userAuth.data.message)
     }
+
+    if(userAuth.data.auth){
+      loginUser(userAuth.data.result.email)
+      navigate('/home');
+    }else{
+      setError(userAuth.data.message)
+    }
+    // loadingStatus(false)
   }
 
   return (
     <div className="container">
       <div className="row justify-content-center">
+      {error && (
+      <div className="alert alert-danger" role="alert">
+        {error}
+      </div>
+    )}
         <div className="col-md-6">
           <div className="card mt-5">
             <div className="card-header">

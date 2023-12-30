@@ -6,6 +6,8 @@ const UserContext = createContext();
 export const UserProvider = ({ children }) => {
   const [userName, setUserName] = useState('');
 
+  const [loading, setLoading] = useState('');
+
   const loginUser = (name) => {
     setUserName(name)
   }
@@ -14,8 +16,12 @@ export const UserProvider = ({ children }) => {
     setUserName('')
   }
 
+  const loadingStatus = (result) => {
+    setLoading(result)
+  }
+
   return (
-    <UserContext.Provider value={{ userName,loginUser,logoutUser }}>
+    <UserContext.Provider value={{ userName,loading,loginUser,logoutUser,loadingStatus }}>
       {children}
     </UserContext.Provider>
   );

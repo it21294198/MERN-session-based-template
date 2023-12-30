@@ -1,4 +1,4 @@
-import React from 'react';
+import React,{useEffect} from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
 import reportWebVitals from './reportWebVitals';
@@ -7,6 +7,8 @@ import Login from './routes/Login';
 import Home from './routes/Home';
 import About from './routes/About'
 import Error from './routes/Error';
+import Loading from './components/Loading';
+import { hassignned } from './api/UserAuth'
 import ActiveRoute from '../src/components/ActiveRoute'
 import { useUser } from './context/UserContext';
 import { UserProvider } from './context/UserContext';
@@ -18,6 +20,7 @@ root.render(
   );
   
 function Context() {
+  
     return ( 
       <UserProvider>
         <Routing/>
@@ -26,7 +29,26 @@ function Context() {
 }
 
 function Routing() {
-  const { userName } = useUser();
+  const { userName ,loginUser,logoutUser,loading,loadingStatus} = useUser();
+
+  const readSession = async () =>{
+    const result = await hassignned()
+    if(result.data.auth){
+      loginUser(result.data.user)
+    }else{
+      logoutUser()
+    }
+  }
+
+  useEffect(() => {
+    // loadingStatus(true)
+    readSession()
+    // loadingStatus(false)
+  });
+
+  if(loading){
+    return(<Loading/>)
+  }
 
   return (
     <BrowserRouter>
