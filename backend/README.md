@@ -78,3 +78,7 @@ npm run dev
 #### More about security
 
 [x-powered-by](https://stackoverflow.com/questions/5867199/cant-get-rid-of-header-x-powered-byexpress/12484642#12484642)
+
+#### CORS
+When frontend (running on http://localhost:3000) makes API requests to your backend (running on http://localhost:3001), it's technically a cross-origin request.
+Without proper CORS configuration, these requests might be blocked by the browser for security reasons.

@@ -135,3 +135,5 @@ export default Protected;
 ```json
 "proxy":"http://localhost:3001"
 ```
+With the proxy setup, you can write your frontend and backend code independently, and they communicate seamlessly during development.
+You can use relative URLs in your frontend code (e.g., /api/data), and the proxy will route those requests to the backend server.
