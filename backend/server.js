@@ -3,12 +3,20 @@ const app = express()
 require('dotenv').config()
 const mongoose = require('mongoose')
 const session = require('express-session')
+const cors = require('cors')
 
 const authRoute = require('../backend/routes/authRoute')
 const userRoute = require('../backend/routes/userRoute')
 
 const auth = require('../backend/services/authService')
 
+const corsOptions = {
+  origin: 'http://localhost:3000/',
+  optionsSuccessStatus: 200, // some legacy browsers (IE11, various SmartTVs) choke on 204
+  methods:['GET', 'PUT', 'POST','DELETE','PATCH']
+}
+
+app.use(cors(corsOptions))
 app.use(express.json())
 app.use(session({
   secret: 'keyboard cat',
@@ -16,7 +24,7 @@ app.use(session({
   saveUninitialized: true,
   // cookie: { secure: false }
   cookie: {
-    maxAge: 60 * 60 * 1000, // Session timeout in milliseconds (1 hour)
+    maxAge: 60*60*1000, // Session timeout in milliseconds (1 hour) : (60 * 60 * 1000)
     secure: false, // Change to true if using HTTPS
     httpOnly: true,
   },
