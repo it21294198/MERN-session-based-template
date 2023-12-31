@@ -10,19 +10,17 @@ const userRoute = require('../backend/routes/userRoute')
 
 const auth = require('../backend/services/authService')
 
-const corsOptions = {
-  origin: 'http://localhost:3000/',
+app.use(cors({
+  origin: 'http://localhost:3000/', // Allow requests from this origin
+  methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
+  credentials: true, // Allow credentials (e.g., cookies, authorization headers)
   optionsSuccessStatus: 200, // some legacy browsers (IE11, various SmartTVs) choke on 204
-  methods:['GET', 'PUT', 'POST','DELETE','PATCH']
-}
-
-app.use(cors(corsOptions))
+}));
 app.use(express.json())
 app.use(session({
   secret: 'keyboard cat',
   resave: false,
   saveUninitialized: true,
-  // cookie: { secure: false }
   cookie: {
     maxAge: 60*60*1000, // Session timeout in milliseconds (1 hour) : (60 * 60 * 1000)
     secure: false, // Change to true if using HTTPS
